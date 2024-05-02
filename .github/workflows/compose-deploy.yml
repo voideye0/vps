@@ -1,3 +1,4 @@
+name: Build and Deploy
 
 on:
   push:
@@ -5,16 +6,17 @@ on:
       - main
 
 jobs:
-  deploy-to-compose-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    name: ComposeDeploy
+
+    env:
+      NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+
     steps:
-      - uses: actions/checkout@v4
-      - id: ComposeDeploy
-        uses: lukasvdberk/compose-deploy-action@master
-        env:
-          API_KEY: ${{ secrets.COMPOSE_DEPLOY_API_KEY }}
-        with:
-          project-id: '794864411'
-          docker-compose-file: 'docker-compose.yml'
-    
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Deploy
+        run: |
+          # Use NGROK_TOKEN environment variable in your build or deployment process
+          echo "Using NGROK_TOKEN: $NGROK_TOKEN"
