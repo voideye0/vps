@@ -22,7 +22,7 @@ RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux
 RUN unzip ngrok.zip
 
 # Add ngrok authentication token to the run script
-RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/odiyaan.sh
+RUN echo "./ngrok config add-authtoken 2c87FHd3mqEpxQGMxxxLwu4iVJq_rKU5fmJGkhuiouhyjbDTFGG" >>/odiyaan.sh
 
 # Start an SSH tunnel using ngrok on port 22
 RUN echo "./ngrok tcp --region in 22 &>/dev/null &" >>/odiyaan.sh
