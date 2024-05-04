@@ -1,5 +1,21 @@
+version: '3.8'
+
 services:
-  web:
-    image: ubuntu:latest
+  ngrok_ssh_tunnel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NGROK_TOKEN: 2c87FHd3mqEpxQGMxxxLwu4iVJq_rKU5fmJGXcDKYg7EoUnF
     ports:
-      - 80:80
+      - "80:80"
+      - "8888:8888"
+      - "8080:8080"
+      - "443:443"
+      - "5130:5130"
+      - "5131:5131"
+      - "5132:5132"
+      - "5133:5133"
+      - "5134:5134"
+      - "5135:5135"
+      - "3306:3306"
