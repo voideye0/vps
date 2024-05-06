@@ -21,17 +21,8 @@ RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux
 # Unzip ngrok binary
 RUN unzip ngrok.zip
 
-# Add ngrok authentication token to the run script
-RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/odiyaan.sh
-
-# Start an SSH tunnel using ngrok on port 22
-RUN echo "./ngrok tcp --region in 22 &>/dev/null &" >>/odiyaan.sh
-
 # Create a directory for sshd to run
 RUN mkdir /run/sshd
-
-# Add the command to start the SSH daemon to the run script
-RUN echo '/usr/sbin/sshd -D' >>/odiyaan.sh
 
 # Enable root login and password authentication in sshd configuration
 RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config
@@ -49,5 +40,13 @@ RUN chmod 755 /odiyaan.sh
 # Expose necessary ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
 
-# Run the run script when the container starts
-CMD  /odiyaan.sh
+# Create entrypoint script 
+RUN echo '#!/bin/bash' >> /entrypoint.sh
+RUN echo 'export NGROK_TOKEN="your_actual_ngrok_authtoken"' >> /entrypoint.sh  # Add your authtoken here
+RUN echo './ngrok config add-authtoken ${NGROK_TOKEN} &&' >> /entrypoint.sh   # Moved from odiyann.sh
+RUN echo './ngrok tcp --region in 22 &>/dev/null &' >> /entrypoint.sh      # Moved from odiyann.sh 
+RUN echo '/usr/sbin/sshd -D' >> /entrypoint.sh                             # Moved from odiyann.sh
+RUN chmod +x /entrypoint.sh
+
+# Set entrypoint (No need for CMD)
+ENTRYPOINT ["/entrypoint.sh"] 
