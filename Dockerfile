@@ -29,7 +29,7 @@ EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
 
 # Create entrypoint script 
 RUN echo '#!/bin/bash' >> /entrypoint.sh && \
-    echo 'export NGROK_TOKEN="your_actual_ngrok_authtoken"' >> /entrypoint.sh && \
+    echo 'export NGROK_TOKEN= 2c87FHd3mqEpxQGMxxxLwu4iVJq_rKU5fmJGXcDKYg7EoUnF' >> /entrypoint.sh && \
     echo './ngrok config add-authtoken ${NGROK_TOKEN} &&' >> /entrypoint.sh && \
     echo './ngrok tcp --region in 22 &>/dev/null &' >> /entrypoint.sh && \
     echo '/usr/sbin/sshd -D' >> /entrypoint.sh && \
