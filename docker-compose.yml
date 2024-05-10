@@ -1,12 +1,12 @@
-version: "3.8"
+version: '3.8'
 
 services:
   rdp-server:
     build: .
     ports:
-      - "22:22"
+      - "2222:22"  # Maps the container's port 22 to the host's port 2222
     volumes:
-      - ngrok_data:/root/.ngrok2 
+      - ngrok_data:/root/.ngrok2  # Mounts the volume to the container's /root/.ngrok2 directory
 
 volumes:
-  ngrok_data:
+  ngrok_data:  # Defines the volume named ngrok_data
